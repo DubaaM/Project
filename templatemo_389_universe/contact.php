@@ -1,3 +1,26 @@
+<?php
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data using $_POST
+    $name = htmlspecialchars($_POST['fullname']);
+    $email = htmlspecialchars($_POST['email']);
+    $phone = htmlspecialchars($_POST['phone']);
+    $subject = htmlspecialchars($_POST['subject']);
+    $message = htmlspecialchars($_POST['text']);
+
+    // Validate the input
+    if (!empty($name) && !empty($email) && !empty($message)) {
+        // Example: Display the submitted data (you can replace this with your own logic)
+        echo "<p>Thank you, <strong>$name</strong>. Your message has been received.</p>";
+        echo "<p><strong>Email:</strong> $email</p>";
+        echo "<p><strong>Phone:</strong> $phone</p>";
+        echo "<p><strong>Subject:</strong> $subject</p>";
+        echo "<p><strong>Message:</strong> $message</p>";
+    } else {
+        echo "<p style='color: red;'>Please fill in all required fields.</p>";
+    }
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <?php include 'partials/header.php'; ?>
@@ -38,7 +61,7 @@
             <div class="content_wrapper content_mb_60">
             <div id="contact_form">
                 <h3>Contact Form</h3>
-                <form method="post" name="contact" action="#">
+                <form method="post" name="contact" action="contact.php">
                     <div class="col_2">
                         <label for="fullname">Name:</label>
                       <input name="fullname" type="text" class="input_field" id="fullname" maxlength="30" />
