@@ -1,5 +1,5 @@
 
-<?php include 'db.php'; ?>
+<?php include 'classes/db.php'; ?>
 <?php include 'partials/header.php'; ?>
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

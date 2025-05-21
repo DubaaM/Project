@@ -1,4 +1,4 @@
-<?php include 'db.php'; ?>
+<?php include 'classes/db.php'; ?>
 
 <?php
 $id = $_GET['id'];
