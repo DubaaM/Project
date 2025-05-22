@@ -1,6 +1,13 @@
 <?php
 require_once 'classes/Contact.php';
-
+/**
+ * Tento súbor predstavuje kontaktný formulár pre návštevníkov stránky.
+ * - Po odoslaní formulára sa skontrolujú povinné polia (meno, email, správa) a správnosť emailu.
+ * - Ak sú údaje správne, správa sa uloží do databázy cez triedu Contact.
+ * - Používateľ dostane spätnú väzbu o úspešnom alebo neúspešnom odoslaní správy.
+ * - Stránka obsahuje hlavičku, bočný panel, samotný formulár, kontaktné informácie a mapu.
+ * - Všetky vstupy sú ošetrené kvôli bezpečnosti.
+ */
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = htmlspecialchars($_POST['fullname']);

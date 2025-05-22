@@ -1,7 +1,14 @@
 
-<?php include 'classes/db.php'; ?>
-<?php include 'partials/header.php'; ?>
-<?php
+<?php 
+include 'classes/db.php';
+include 'partials/header.php'; 
+/**
+ * Tento súbor slúži na vytváranie nových článkov.
+ * - Po odoslaní formulára sa načítajú a ošetria údaje (názov, obsah).
+ * - Článok sa uloží do databázy do tabuľky articles pomocou PDO.
+ * - Po úspešnom vytvorení článku je používateľ presmerovaný na stránku so zoznamom článkov.
+ * - Stránka obsahuje hlavičku, formulár na zadanie článku a pätičku.
+ */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = htmlspecialchars($_POST['title']);
     $content = htmlspecialchars($_POST['content']);

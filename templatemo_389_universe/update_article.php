@@ -1,7 +1,13 @@
-<?php include 'classes/db.php'; ?>
-<?php include 'partials/header.php'; ?>
-
-<?php
+<?php 
+include 'classes/db.php';
+include 'partials/header.php';
+/**
+ * Tento súbor slúži na úpravu existujúceho článku.
+ * - Načíta článok z databázy podľa ID z GET parametra.
+ * - Po odoslaní formulára sa aktualizujú údaje článku v databáze.
+ * - Po úspešnej úprave je používateľ presmerovaný na stránku so zoznamom článkov.
+ * - Stránka obsahuje hlavičku, formulár na úpravu článku a pätičku.
+ */
 $id = $_GET['id'];
 $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = ?");
 $stmt->execute([$id]);

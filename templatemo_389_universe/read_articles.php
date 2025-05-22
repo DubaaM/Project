@@ -1,10 +1,16 @@
-<?php include 'classes/db.php'; ?>
-<?php include 'partials/header.php'; ?>
-
-<?php
+<?php 
+include 'classes/db.php';
+include 'partials/header.php';
+/**
+ * Tento súbor slúži na zobrazenie a správu všetkých článkov.
+ * - Načíta všetky články z databázy a zobrazí ich v zozname.
+ * - Každý článok je možné upraviť alebo vymazať pomocou odkazov.
+ * - Stránka obsahuje hlavičku, zoznam článkov, odkazy na editáciu a vymazanie, a pätičku.
+ */
 $stmt = $pdo->query("SELECT * FROM articles ORDER BY created_at DESC");
 $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <div id="templatemo_main_content">
 
     <div id="templatemo_content">

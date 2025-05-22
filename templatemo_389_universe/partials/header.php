@@ -72,7 +72,6 @@ ddsmoothmenu.init({
                 </li>
                 <li><a href="about.php"><span></span>About</a></li>                
                 <li><a href="contact.php"><span></span>Contact</a></li>
-                <li><a href="read_articles.php"><span></span>Manage Articles</a></li>
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->

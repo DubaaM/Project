@@ -1,7 +1,14 @@
 <?php
 session_start();
 require_once 'classes/user.php';
-
+/**
+ * Tento súbor slúži na prihlásenie admina do systému.
+ * - Po odoslaní formulára sa načítajú prihlasovacie údaje (meno, heslo).
+ * - Overí sa meno a heslo pomocou triedy User (hash).
+ * - Pri úspešnom prihlásení sa nastaví session a admin je presmerovaný na admin rozhranie.
+ * - Pri neúspešnom prihlásení sa zobrazí chybová správa.
+ * - Stránka obsahuje prihlasovací formulár a spätnú väzbu pre používateľa.
+ */
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

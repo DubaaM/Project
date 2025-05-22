@@ -1,4 +1,12 @@
 <?php
+/**
+ * Trieda Contact je zodpovedná za spracovanie údajov z kontaktného formulára.
+ * - V konštruktore inicializuje databázové pripojenie (PDO).
+ * - Metóda create() uloží novú správu do databázy (meno, email, telefón, predmet, správa).
+ * - Metóda getAll() načíta všetky kontaktné správy od najnovšej po najstaršiu.
+ * - Metóda delete() vymaže konkrétnu správu z databázy podľa ID.
+ * Všetky databázové operácie sú vykonávané bezpečne pomocou pripravených dotazov.
+ */
 require_once 'classes/db.php';
 
 class Contact {

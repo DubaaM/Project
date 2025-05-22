@@ -1,4 +1,13 @@
 <?php
+/**
+ * Tento súbor predstavuje admin rozhranie pre správu správ z kontaktného formulára.
+ * - Prístup je povolený len prihlásenému adminovi (kontrola session).
+ * - Načítajú sa všetky správy z databázy cez triedu Contact a zobrazia sa v tabuľke.
+ * - Admin môže jednotlivé správy vymazať (cez GET parameter 'delete').
+ * - Po vymazaní správy sa stránka automaticky obnoví.
+ * - Každý výpis údajov je filtrovaný cez htmlspecialchars kvôli bezpečnosti.
+ * - Na spodku stránky je možnosť odhlásenia (logout).
+ */
 session_start();
 if (!isset($_SESSION['admin'])) {
     header('Location: login.php');
