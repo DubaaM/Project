@@ -1,21 +1,25 @@
 <?php
-// Check if the form is submitted
+require_once 'classes/Contact.php';
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data using $_POST
     $name = htmlspecialchars($_POST['fullname']);
     $email = htmlspecialchars($_POST['email']);
     $phone = htmlspecialchars($_POST['phone']);
     $subject = htmlspecialchars($_POST['subject']);
     $message = htmlspecialchars($_POST['text']);
 
-    // Validate the input
     if (!empty($name) && !empty($email) && !empty($message)) {
-        // Example: Display the submitted data (you can replace this with your own logic)
-        echo "<p>Thank you, <strong>$name</strong>. Your message has been received.</p>";
-        echo "<p><strong>Email:</strong> $email</p>";
-        echo "<p><strong>Phone:</strong> $phone</p>";
-        echo "<p><strong>Subject:</strong> $subject</p>";
-        echo "<p><strong>Message:</strong> $message</p>";
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo "<p style='color: red;'>Please enter a valid email address.</p>";
+        } else {
+            $contact = new Contact();
+            if ($contact->create($name, $email, $phone, $subject, $message)) {
+                echo "<p style='color: green;'>Thank you, <strong>$name</strong>. Your message has been saved.</p>";
+            } else {
+                echo "<p style='color: red;'>An error occurred while saving your message.</p>";
+            }
+        }
     } else {
         echo "<p style='color: red;'>Please fill in all required fields.</p>";
     }

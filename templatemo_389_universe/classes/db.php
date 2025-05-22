@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
-$dbname = 'project_main'; // Replace with your database name
-$username = 'root'; // Default username for XAMPP
+$dbname = 'project_main'; 
+$username = 'root'; 
 $password = ''; 
 
 try {
