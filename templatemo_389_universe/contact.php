@@ -11,7 +11,7 @@ require_once 'classes/Contact.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = htmlspecialchars($_POST['fullname']);
-    $email = htmlspecialchars($_POST['email']);
+    $email = htmlspecialchars($_POST['email']); // htmlspecialchars zabezpečuje, že špeciálne znaky budú správne zobrazené , XSS a XSS útoky sú minimalizované.
     $phone = htmlspecialchars($_POST['phone']);
     $subject = htmlspecialchars($_POST['subject']);
     $message = htmlspecialchars($_POST['text']);

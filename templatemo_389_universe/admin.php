@@ -63,6 +63,7 @@ $contacts = $contactObj->getAll();
         <?php endforeach; ?>
     </table>
     <br>
+    <a href="read_articles.php" >Articles</a>
     <a href="logout.php">Logout</a>
 </body>
 </html>

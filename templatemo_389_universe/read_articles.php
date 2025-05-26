@@ -1,4 +1,9 @@
 <?php 
+session_start();
+if (!isset($_SESSION['admin'])) {
+    header('Location: login.php');
+    exit;
+}
 include 'classes/db.php';
 include 'partials/header.php';
 /**
@@ -9,6 +14,7 @@ include 'partials/header.php';
  */
 $stmt = $pdo->query("SELECT * FROM articles ORDER BY created_at DESC");
 $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <div id="templatemo_main_content">

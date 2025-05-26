@@ -1,5 +1,10 @@
 
 <?php 
+session_start();
+if (!isset($_SESSION['admin'])) {
+    header('Location: login.php');
+    exit;
+}
 include 'classes/db.php';
 include 'partials/header.php'; 
 /**
@@ -9,6 +14,7 @@ include 'partials/header.php';
  * - Po úspešnom vytvorení článku je používateľ presmerovaný na stránku so zoznamom článkov.
  * - Stránka obsahuje hlavičku, formulár na zadanie článku a pätičku.
  */
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = htmlspecialchars($_POST['title']);
     $content = htmlspecialchars($_POST['content']);

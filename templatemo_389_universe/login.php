@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="username" required><br>
         <label>Password:</label>
         <input type="password" name="password" required><br>
-        <button type="submit">Bejelentkezés</button>
+        <button type="submit">Login</button>
     </form>
 </body>
 </html>

@@ -1,4 +1,9 @@
-<?php 
+<?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+    header('Location: login.php');
+    exit;
+}
 include 'classes/db.php';
 include 'partials/header.php';
 /**
@@ -8,6 +13,7 @@ include 'partials/header.php';
  * - Po úspešnej úprave je používateľ presmerovaný na stránku so zoznamom článkov.
  * - Stránka obsahuje hlavičku, formulár na úpravu článku a pätičku.
  */
+
 $id = $_GET['id'];
 $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = ?");
 $stmt->execute([$id]);
