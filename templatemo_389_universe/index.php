@@ -1,4 +1,10 @@
-
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+    exit;
+}
+?>
 <?php include 'partials/header.php'; ?>
     <div id="templatemo_slider" >
 		<div class="slider-wrapper theme-default">

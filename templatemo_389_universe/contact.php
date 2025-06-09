@@ -10,27 +10,51 @@ require_once 'classes/Contact.php';
  */
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Skontroluj, či bol formulár odoslaný pomocou metódy POST (teda používateľ klikol na "odoslať")
+
     $name = htmlspecialchars($_POST['fullname']);
-    $email = htmlspecialchars($_POST['email']); // htmlspecialchars zabezpečuje, že špeciálne znaky budú správne zobrazené , XSS a XSS útoky sú minimalizované.
+    // Z formulára získa hodnotu z poľa 'fullname' a prevedie špeciálne znaky na HTML entity
+    // Zabezpečenie proti XSS (Cross-Site Scripting) útokom
+
+    $email = htmlspecialchars($_POST['email']); 
+    // To isté pre e-mail – ochrana pred nebezpečnými znakmi, ktoré by mohli byť zneužité
+
     $phone = htmlspecialchars($_POST['phone']);
+    // Telefónne číslo (aj keď zvyčajne menej rizikové, stále je dobré ho ošetriť)
+
     $subject = htmlspecialchars($_POST['subject']);
+    // Predmet správy – opäť ošetrenie voči XSS
+
     $message = htmlspecialchars($_POST['text']);
+    // Text správy – ošetrenie špeciálnych znakov
 
     if (!empty($name) && !empty($email) && !empty($message)) {
+        // Skontroluj, či meno, e-mail a správa NIE sú prázdne (tieto sú povinné)
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            // Overenie, či je e-mail v správnom formáte pomocou filter_var a filtra FILTER_VALIDATE_EMAIL
             echo "<p style='color: red;'>Please enter a valid email address.</p>";
+            // Ak e-mail nie je platný – zobraz chybové hlásenie
         } else {
             $contact = new Contact();
+            // Vytvorenie nového objektu triedy Contact
+
             if ($contact->create($name, $email, $phone, $subject, $message)) {
+                // Pokus o uloženie správy do databázy cez metódu create()
+
                 echo "<p style='color: green;'>Thank you, <strong>$name</strong>. Your message has been saved.</p>";
+                // Správa bola úspešne uložená – zobraz poďakovanie
             } else {
                 echo "<p style='color: red;'>An error occurred while saving your message.</p>";
+                // Ak zlyhá uloženie do databázy – zobraz chybu
             }
         }
     } else {
         echo "<p style='color: red;'>Please fill in all required fields.</p>";
+        // Ak sú niektoré povinné polia prázdne – upozorni používateľa
     }
 }
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

@@ -1,30 +1,21 @@
 <?php
-/**
- * Tento súbor predstavuje admin rozhranie pre správu správ z kontaktného formulára.
- * - Prístup je povolený len prihlásenému adminovi (kontrola session).
- * - Načítajú sa všetky správy z databázy cez triedu Contact a zobrazia sa v tabuľke.
- * - Admin môže jednotlivé správy vymazať (cez GET parameter 'delete').
- * - Po vymazaní správy sa stránka automaticky obnoví.
- * - Každý výpis údajov je filtrovaný cez htmlspecialchars kvôli bezpečnosti.
- * - Na spodku stránky je možnosť odhlásenia (logout).
- */
-session_start();
-if (!isset($_SESSION['admin'])) {
+
+session_start(); // Spustenie
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
+require_once 'classes/Contact.php'; // Načítanie súboru 'Contact.php' (iba raz), ktorý obsahuje definíciu triedy Contact
 
-require_once 'classes/Contact.php';
-$contactObj = new Contact();
+$contactObj = new Contact(); // Vytvorenie novej inštancie (objektu) triedy Contact a uloženie do premennej $contactObj
 
-if (isset($_GET['delete'])) {
-    $id = (int)$_GET['delete'];
-    $contactObj->delete($id);
+if (isset($_GET['delete'])) { // Ak je nastavený parameter 'delete' v URL (napr. admin.php?delete=3)
+    $id = (int)$_GET['delete']; // Získaj hodnotu parametra 'delete', prevedenú na celé číslo a ulož do premennej $id
+    $contactObj->delete($id); // Zavolaj metódu delete objektu contactObj, ktorá vymaže záznam s daným ID
     header('Location: admin.php');
     exit;
 }
-
-$contacts = $contactObj->getAll();
+$contacts = $contactObj->getAll(); // Zavolaj metódu getAll objektu contactObj, ktorá získa všetky kontakty a uloží ich do premennej $contacts
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +27,7 @@ $contacts = $contactObj->getAll();
     </style>
 </head>
 <body>
-    <h2>Hello, <?= htmlspecialchars($_SESSION['admin']) ?>!</h2>
+    <h2>Hello, <?= htmlspecialchars($_SESSION['username']) ?>!</h2>
     <h3>Messages</h3>
     <table>
         <tr>

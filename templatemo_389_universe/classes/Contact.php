@@ -1,39 +1,38 @@
 <?php
-/**
- * Trieda Contact je zodpovedná za spracovanie údajov z kontaktného formulára.
- * - V konštruktore inicializuje databázové pripojenie (PDO).
- * - Metóda create() uloží novú správu do databázy (meno, email, telefón, predmet, správa).
- * - Metóda getAll() načíta všetky kontaktné správy od najnovšej po najstaršiu.
- * - Metóda delete() vymaže konkrétnu správu z databázy podľa ID.
- * Všetky databázové operácie sú vykonávané bezpečne pomocou pripravených dotazov.
- */
-require_once 'classes/db.php';
+
+require_once 'classes/db.php'; // Načítanie súboru 'db.php', ktorý obsahuje pripojenie k databáze (zabezpečí dostupnosť premennej $pdo)
 
 class Contact {
     private $db;
-
     public function __construct() {
-        global $pdo;
-        $this->db = $pdo;
+        global $pdo; // Použitie globálnej premennej $pdo (obsahuje spojenie s databázou z db.php)
+        $this->db = $pdo; // Priradenie globálneho objektu $pdo do atribútu $db tejto triedy
     }
 
-    public function create($fullname, $email, $phone, $subject, $message) {
-        try {
+    public function create($fullname, $email, $phone, $subject, $message) { 
+        try { 
             $stmt = $this->db->prepare("INSERT INTO contacts (fullname, email, phone, subject, message) VALUES (?, ?, ?, ?, ?)");
-            return $stmt->execute([$fullname, $email, $phone, $subject, $message]);
-        } catch (PDOException $e) {
+            // Priprav SQL príkaz na vloženie údajov do tabuľky contacts
+            return $stmt->execute([$fullname, $email, $phone, $subject, $message]); 
+            // Spusti pripravený SQL prikaz
+        } catch (PDOException $e) { 
             throw new Exception("error: " . $e->getMessage());
         }
     }
 
-    public function getAll() {
-        $stmt = $this->db->query("SELECT * FROM contacts ORDER BY created_at DESC");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function getAll() { 
+        $stmt = $this->db->query("SELECT * FROM contacts ORDER BY created_at DESC"); 
+        // Spusti SQL dotaz, ktorý vyberie všetky stĺpce z tabuľky contacts
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+        // Vráť všetky výsledky ako pole asociatívnych polí (každý kontakt je jedno pole s názvami stĺpcov ako kľúčmi)
     }
 
-    public function delete($id) {
-        $stmt = $this->db->prepare("DELETE FROM contacts WHERE id = ?");
-        return $stmt->execute([$id]);
+    public function delete($id) { 
+        $stmt = $this->db->prepare("DELETE FROM contacts WHERE id = ?"); 
+        // Priprav SQL príkaz na vymazanie záznamu
+        return $stmt->execute([$id]); 
+        // Spusti príkaz
     }
 }
+
 ?>
