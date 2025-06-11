@@ -1,5 +1,4 @@
 <?php
-
 require_once 'db.php';
 // Načíta súbor 'db.php', ktorý obsahuje napríklad nastavenie databázového pripojenia
 // Použitie require_once znamená:
@@ -31,6 +30,7 @@ class User {
         $stmt = $this->db->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
         return $stmt->execute([$username, $passwordHash, $role]);
     }
+
     public function usernameExists($username) {
         $stmt = $this->db->prepare("SELECT id FROM users WHERE username = ?");
         $stmt->execute([$username]);

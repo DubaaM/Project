@@ -7,6 +7,7 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 ?>
+
 <?php include 'partials/header.php'; ?>
     
     <div id="templatemo_main_content">

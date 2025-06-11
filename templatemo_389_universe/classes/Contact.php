@@ -26,7 +26,6 @@ class Contact {
         return $stmt->fetchAll(PDO::FETCH_ASSOC); 
         // Vráť všetky výsledky ako pole asociatívnych polí (každý kontakt je jedno pole s názvami stĺpcov ako kľúčmi)
     }
-
     public function delete($id) { 
         $stmt = $this->db->prepare("DELETE FROM contacts WHERE id = ?"); 
         // Priprav SQL príkaz na vymazanie záznamu
@@ -34,5 +33,4 @@ class Contact {
         // Spusti príkaz
     }
 }
-
 ?>

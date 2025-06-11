@@ -1,49 +1,29 @@
 <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+    exit;
+}
 require_once 'classes/Contact.php';
-/**
- * Tento súbor predstavuje kontaktný formulár pre návštevníkov stránky.
- * - Po odoslaní formulára sa skontrolujú povinné polia (meno, email, správa) a správnosť emailu.
- * - Ak sú údaje správne, správa sa uloží do databázy cez triedu Contact.
- * - Používateľ dostane spätnú väzbu o úspešnom alebo neúspešnom odoslaní správy.
- * - Stránka obsahuje hlavičku, bočný panel, samotný formulár, kontaktné informácie a mapu.
- * - Všetky vstupy sú ošetrené kvôli bezpečnosti.
- */
-
+// Načítanie súboru 'Contact.php', ktorý obsahuje definíciu triedy Contact
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Skontroluj, či bol formulár odoslaný pomocou metódy POST (teda používateľ klikol na "odoslať")
-
     $name = htmlspecialchars($_POST['fullname']);
     // Z formulára získa hodnotu z poľa 'fullname' a prevedie špeciálne znaky na HTML entity
-    // Zabezpečenie proti XSS (Cross-Site Scripting) útokom
-
     $email = htmlspecialchars($_POST['email']); 
-    // To isté pre e-mail – ochrana pred nebezpečnými znakmi, ktoré by mohli byť zneužité
-
     $phone = htmlspecialchars($_POST['phone']);
-    // Telefónne číslo (aj keď zvyčajne menej rizikové, stále je dobré ho ošetriť)
-
     $subject = htmlspecialchars($_POST['subject']);
-    // Predmet správy – opäť ošetrenie voči XSS
-
     $message = htmlspecialchars($_POST['text']);
-    // Text správy – ošetrenie špeciálnych znakov
 
     if (!empty($name) && !empty($email) && !empty($message)) {
-        // Skontroluj, či meno, e-mail a správa NIE sú prázdne (tieto sú povinné)
-
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             // Overenie, či je e-mail v správnom formáte pomocou filter_var a filtra FILTER_VALIDATE_EMAIL
             echo "<p style='color: red;'>Please enter a valid email address.</p>";
-            // Ak e-mail nie je platný – zobraz chybové hlásenie
         } else {
             $contact = new Contact();
-            // Vytvorenie nového objektu triedy Contact
-
             if ($contact->create($name, $email, $phone, $subject, $message)) {
                 // Pokus o uloženie správy do databázy cez metódu create()
-
                 echo "<p style='color: green;'>Thank you, <strong>$name</strong>. Your message has been saved.</p>";
-                // Správa bola úspešne uložená – zobraz poďakovanie
             } else {
                 echo "<p style='color: red;'>An error occurred while saving your message.</p>";
                 // Ak zlyhá uloženie do databázy – zobraz chybu
@@ -51,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         echo "<p style='color: red;'>Please fill in all required fields.</p>";
-        // Ak sú niektoré povinné polia prázdne – upozorni používateľa
     }
 }
 

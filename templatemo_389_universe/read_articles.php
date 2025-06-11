@@ -4,8 +4,8 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
-include 'classes/db.php';
-include 'partials/header.php';
+require_once 'classes/db.php';
+include_once 'partials/header.php';
 /**
  * Tento súbor slúži na zobrazenie a správu všetkých článkov.
  * - Načíta všetky články z databázy a zobrazí ich v zozname.
